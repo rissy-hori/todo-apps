@@ -10,8 +10,6 @@ public class ToDo extends RealmObject{
     public String updateDate;
     // 内容
     public String content;
-    // checkBox
-    public boolean isChecked;
 
 
 }
