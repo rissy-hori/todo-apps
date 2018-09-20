@@ -20,11 +20,10 @@ public class ToDoAdapter extends ArrayAdapter<ToDo> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-
-       ToDo todo = getItem(position);
+        ToDo todo = getItem(position);
 
         if (convertView == null) {
-            convertView = layoutinflater.inflate(R.layout.layout_item_todo_1, null);
+            convertView = layoutinflater.inflate(R.layout.layout_item_todo, null);
         }
 
         TextView titleText = (TextView) convertView.findViewById(R.id.titleText);

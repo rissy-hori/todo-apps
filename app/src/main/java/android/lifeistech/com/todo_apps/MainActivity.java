@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.List;
@@ -24,6 +25,25 @@ public class MainActivity extends AppCompatActivity {
 
         realm = Realm.getDefaultInstance();
         listView = findViewById(R.id.listView);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                // ListViewのposition番目に対応するメモの情報を持ってきている
+                ToDo todo = (ToDo) parent.getItemAtPosition(position);
+
+                // DetailActivityへのIntentを作る(詳細画面に遷移する準備をする)
+                Intent intent = new Intent(MainActivity.this, DetailActivity.class);
+
+                // ToDoクラスのupdateDateという変数の値を、"updateDate"という鍵を使ってIntentにセットしている
+                intent.putExtra("updateDate", todo.updateDate);
+                //intent.putExtra("title", todo.title);      <-不要　
+                //intent.putExtra("content", todo.content);  <-不要
+
+                // 作ったIntentを使って詳細画面に遷移する
+                startActivity(intent);
+            }
+        });
     }
 
 
@@ -52,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
         List<ToDo> items = realm.copyFromRealm(results);
 
         // adapterにデータを渡す
-        ToDoAdapter adapter = new ToDoAdapter(this, R.layout.layout_item_todo_1, items);
+        ToDoAdapter adapter = new ToDoAdapter(this, R.layout.layout_item_todo, items);
 
         // listViewにadapterをセット
         listView.setAdapter(adapter);
