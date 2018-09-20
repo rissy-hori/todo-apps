@@ -3,13 +3,13 @@ package android.lifeistech.com.todo_apps;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class MainActivity extends AppCompatActivity {
+public class EditActivity extends AppCompatActivity {
 
-    // 一覧表示
+    // 編集画面 (Main -> Detail -> Edit)
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_edit);
     }
 }
