@@ -11,6 +11,8 @@ public class ToDo extends RealmObject{
     // 内容
     public String content;
 
+    public boolean isChecked;
+
 
 }
 
