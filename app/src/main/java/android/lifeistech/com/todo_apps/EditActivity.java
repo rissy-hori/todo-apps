@@ -1,7 +1,9 @@
 package android.lifeistech.com.todo_apps;
 
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 
@@ -30,6 +32,18 @@ public class EditActivity extends AppCompatActivity {
         contentEditText = (EditText) findViewById(R.id.contentEditText);
 
         showData();
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        int itemId = item.getItemId();
+        if(itemId == android.R.id.home){
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     public void showData(){
@@ -40,9 +54,6 @@ public class EditActivity extends AppCompatActivity {
         contentEditText.setText(todo.content);
     }
 
-    public void submit(View v){
-
-    }
 
     // 入力データを元にToDoを作る
     public void recreate(View view){

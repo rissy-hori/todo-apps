@@ -38,7 +38,7 @@ tools:context=".EditActivity">
         android:layout_alignParentRight="true"
         android:layout_margin="16dp"
         android:onClick="recreate"
-        android:src="@drawable/ic_plus"
+        android:src="@android:drawable/checkbox_on_background"
         app:fabSize="normal" />
 
 

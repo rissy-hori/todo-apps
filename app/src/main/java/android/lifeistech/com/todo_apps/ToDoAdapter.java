@@ -3,6 +3,7 @@ package android.lifeistech.com.todo_apps;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.text.Layout;
 import android.view.LayoutInflater;
@@ -60,12 +61,11 @@ public class ToDoAdapter extends ArrayAdapter<ToDo> {
             });
 
             viewHolder.checkBox.setOnClickListener(new View.OnClickListener() {
-                //FABとかぶる　-> http://kojiko-android.hatenablog.com/entry/2016/02/11/130550
-
                 @Override
                 public void onClick(View view) {
                     if (todo.isChecked == false){
                         // task complete
+
                         Snackbar.make(view, "Task marked complete", Snackbar.LENGTH_SHORT).show();
                         viewHolder.layout.setBackgroundColor(Color.GRAY);
                         todo.isChecked = true;
@@ -77,17 +77,7 @@ public class ToDoAdapter extends ArrayAdapter<ToDo> {
                     }
                 }
             });
-
-
         }
-
-
-
-
-
-
-
-
         return convertView;
     }
 
