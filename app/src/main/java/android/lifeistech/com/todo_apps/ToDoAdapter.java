@@ -64,7 +64,6 @@ public class ToDoAdapter extends ArrayAdapter<ToDo> {
                 }
             });
 
-
             viewHolder.checkBox.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(final View view) {
