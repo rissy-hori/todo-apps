@@ -3,6 +3,7 @@ package android.lifeistech.com.todo_apps;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -24,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
     public ListView listView;
     public TextView titleMain;
 
-    private RealmResults<ToDo> results;
+    private RealmResults<ToDo> results = null;
     private List<ToDo> items;
     private ToDoAdapter adapter;
 
@@ -38,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
         realm = Realm.getDefaultInstance();
         listView = findViewById(R.id.listView);
         titleMain = findViewById(R.id.titleMain);
+        Log.d("whatMethod","onCreate");
 
     }
 
@@ -45,21 +47,24 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         setToDoList();
+        Log.d("whatMethod","onResume");
     }
 
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        //realmを閉じる
         realm.close();
+        Log.d("whatMethod","onDestroy");
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_list, menu);
+        Log.d("whatMethod","onCreateOptionMenu");
         return super.onCreateOptionsMenu(menu);
+
     }
 
     @Override
@@ -75,20 +80,25 @@ public class MainActivity extends AppCompatActivity {
                 results = realm.where(ToDo.class).equalTo("isChecked", false).findAll();
                 break;
             case R.id.menuComplete:
-                titleMain.setText("Complete TO-DOs");
+                titleMain.setText("Completed TO-DOs");
                 results = realm.where(ToDo.class).equalTo("isChecked", true).findAll();
                 break;
         }
         items = realm.copyFromRealm(results);
         ToDoAdapter adapter = new ToDoAdapter(this, R.layout.layout_item_todo, items);
+        //adapter = new ToDoAdapter(this, R.layout.layout_item_todo, items);
+
         listView.setAdapter(adapter);
 
+
+        Log.d("whatMethod","onOptionsItemSelected");
         return super.onOptionsItemSelected(item);
     }
 
     public void create(View v){
         Intent intent = new Intent(this, CreateActivity.class);
         startActivity(intent);
+        Log.d("whatMethod","create");
     }
 
     public void setToDoList(){
@@ -97,6 +107,7 @@ public class MainActivity extends AppCompatActivity {
         adapter = new ToDoAdapter(this, R.layout.layout_item_todo, items);
 
         listView.setAdapter(adapter);
+        Log.d("whatMethod","setToDoList");
     }
 
 
