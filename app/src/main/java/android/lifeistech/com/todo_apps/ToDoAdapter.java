@@ -86,6 +86,7 @@ public class ToDoAdapter extends ArrayAdapter<ToDo> {
                                 viewHolder.layout.setBackgroundColor(Color.WHITE);
                                 Log.d("whatMethod","onClick(checkBox):false");
                             }
+                            realm.copyToRealm(todo);
                         }
                     });
                     realm.close();
