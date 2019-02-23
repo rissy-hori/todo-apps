@@ -29,8 +29,6 @@ public class MainActivity extends AppCompatActivity {
     private List<ToDo> items;
     private ToDoAdapter adapter;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,15 +38,12 @@ public class MainActivity extends AppCompatActivity {
         realm = Realm.getDefaultInstance();
         listView = findViewById(R.id.listView);
         titleMain = findViewById(R.id.titleMain);
-        Log.d("whatMethod","onCreate");
-
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         setToDoList();
-        Log.d("whatMethod","onResume");
     }
 
 
@@ -56,16 +51,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         realm.close();
-        Log.d("whatMethod","onDestroy");
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_list, menu);
-        Log.d("whatMethod","onCreateOptionMenu");
         return super.onCreateOptionsMenu(menu);
-
     }
 
     @Override
@@ -86,29 +78,22 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
         items = realm.copyFromRealm(results);
+
         ToDoAdapter adapter = new ToDoAdapter(this, R.layout.layout_item_todo, items);
-        //adapter = new ToDoAdapter(this, R.layout.layout_item_todo, items);
-
         listView.setAdapter(adapter);
-
-
-        Log.d("whatMethod","onOptionsItemSelected");
         return super.onOptionsItemSelected(item);
     }
 
     public void create(View v){
         Intent intent = new Intent(this, CreateActivity.class);
         startActivity(intent);
-        Log.d("whatMethod","create");
     }
 
     public void setToDoList(){
         results = realm.where(ToDo.class).findAll();
         items = realm.copyFromRealm(results);
         adapter = new ToDoAdapter(this, R.layout.layout_item_todo, items);
-
         listView.setAdapter(adapter);
-        Log.d("whatMethod","setToDoList");
     }
 
 

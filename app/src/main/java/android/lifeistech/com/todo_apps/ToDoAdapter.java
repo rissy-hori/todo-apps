@@ -20,6 +20,7 @@ import io.realm.Realm;
 public class ToDoAdapter extends ArrayAdapter<ToDo> {
 
     private LayoutInflater layoutinflater;
+    public Realm realm;
 
     public ToDoAdapter(Context context, int textViewResourceId, List<ToDo> objects) {
         super(context, textViewResourceId, objects);
@@ -30,6 +31,7 @@ public class ToDoAdapter extends ArrayAdapter<ToDo> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         final ViewHolder viewHolder;
+        final int mPosition = position;
 
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.layout_item_todo, null);
@@ -44,7 +46,6 @@ public class ToDoAdapter extends ArrayAdapter<ToDo> {
         if (todo != null) {
             viewHolder.titleText.setText(todo.title);
             viewHolder.checkBox.setChecked(todo.isChecked); // Realmで保存されたisCheckedをチェックボックスにを反映
-            Log.d("todo", "renew");
 
             if(todo.isChecked){
                 viewHolder.layout.setBackgroundColor(Color.GRAY);
@@ -55,37 +56,34 @@ public class ToDoAdapter extends ArrayAdapter<ToDo> {
             viewHolder.layout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(view.getContext(), DetailActivity.class);     // MainActivity.thisだとエラー
+                    Intent intent = new Intent(view.getContext(), DetailActivity.class);
                     intent.putExtra("updateDate", todo.updateDate);
-                    // 作ったIntentを使って詳細画面に遷移する view.getContext()
                     view.getContext().startActivity(intent);
-                    //context.startActivity(intent);
-                    Log.d("whatMethod","onClick(layout)");
                 }
             });
 
             viewHolder.checkBox.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(final View view) {
+
                     final Realm realm = Realm.getDefaultInstance();
                     realm.executeTransaction(new Realm.Transaction() {
                         @Override
                         public void execute(Realm bgRealm) {
+                            // クリックされたToDOに対応するデータを取得
+                            ToDo clickedTodo = realm.where(ToDo.class).equalTo("updateDate",
+                                    getItem(mPosition).updateDate).findFirst();
 
-                            if (viewHolder.checkBox.isChecked() && todo.isChecked == false) {
-                                todo.isChecked = true;
+                            if (viewHolder.checkBox.isChecked() && clickedTodo.isChecked == false) {
+                                clickedTodo.isChecked = true;
                                 Snackbar.make(view, "Task marked complete", Snackbar.LENGTH_SHORT).show();
                                 viewHolder.layout.setBackgroundColor(Color.GRAY);
-                                Log.d("whatMethod","onClick(checkBox):true");
                             }
-
-                            if(!viewHolder.checkBox.isChecked() && todo.isChecked == true){
-                                todo.isChecked = false;
+                            if(!viewHolder.checkBox.isChecked() && clickedTodo.isChecked == true){
+                                clickedTodo.isChecked = false;
                                 Snackbar.make(view, "Task marked active", Snackbar.LENGTH_SHORT).show();
                                 viewHolder.layout.setBackgroundColor(Color.WHITE);
-                                Log.d("whatMethod","onClick(checkBox):false");
                             }
-                            realm.copyToRealm(todo);
                         }
                     });
                     realm.close();

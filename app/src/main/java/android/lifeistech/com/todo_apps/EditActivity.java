@@ -28,8 +28,8 @@ public class EditActivity extends AppCompatActivity {
         setContentView(R.layout.activity_edit);
 
         realm = Realm.getDefaultInstance();
-        titleEditText = (EditText) findViewById(R.id.titleEditText);
-        contentEditText = (EditText) findViewById(R.id.contentEditText);
+        titleEditText = findViewById(R.id.titleEditText);
+        contentEditText = findViewById(R.id.contentEditText);
 
         showData();
 

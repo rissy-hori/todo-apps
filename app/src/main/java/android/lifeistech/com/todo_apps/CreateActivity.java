@@ -13,7 +13,7 @@ import io.realm.Realm;
 
 public class CreateActivity extends AppCompatActivity {
 
-    // ToDoの新規作成画面　(Main->Create)
+    // ToDoの新規作成画面　(Main -> Create)
 
     public Realm realm;
 

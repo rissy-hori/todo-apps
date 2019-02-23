@@ -17,7 +17,7 @@ import io.realm.Realm;
 
 public class DetailActivity extends AppCompatActivity {
 
-    // 詳細表示　(Main -> Detail)
+    // ToDoの詳細表示　(Main -> Detail)
 
     public Realm realm;
 
@@ -44,16 +44,14 @@ public class DetailActivity extends AppCompatActivity {
             public void onClick(View view) {
                 final ToDo todo = realm.where(ToDo.class).equalTo("updateDate",
                         getIntent().getStringExtra("updateDate")).findFirst();
-                if (todo.isChecked == false){
-                    // task complete
 
+                if (todo.isChecked == false){
                     Snackbar.make(view, "Task marked complete", Snackbar.LENGTH_SHORT).show();
                     realm.beginTransaction();
                     todo.isChecked = true;
                     realm.commitTransaction();
 
                 } else {
-                    // task active
                     Snackbar.make(view, "Task marked active", Snackbar.LENGTH_SHORT).show();
                     realm.beginTransaction();
                     todo.isChecked = false;
