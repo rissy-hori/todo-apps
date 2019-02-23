@@ -64,7 +64,6 @@ public class ToDoAdapter extends ArrayAdapter<ToDo> {
                 }
             });
 
-
             viewHolder.checkBox.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(final View view) {
@@ -87,6 +86,7 @@ public class ToDoAdapter extends ArrayAdapter<ToDo> {
                                 Log.d("whatMethod","onClick(checkBox):false");
                             }
                             realm.copyToRealm(todo);
+
                         }
                     });
                     realm.close();
